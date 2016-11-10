@@ -34,6 +34,21 @@ func NewMatcher() *Matcher {
 	}
 }
 
+func NewStringMatcher(dictionary []string) *Matcher {
+	this := &Matcher{
+		root: newTrieNode(),
+		size: 0,
+		mark: make([]bool, 0),
+	}
+	for i, _ := range dictionary {
+		this.insert(dictionary[i])
+	}
+	this.build()
+	this.mark = make([]bool, this.size)
+
+	return this
+}
+
 // initialize the ahocorasick
 func (this *Matcher) Build(dictionary []string) {
 	for i, _ := range dictionary {
